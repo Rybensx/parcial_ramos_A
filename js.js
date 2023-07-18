@@ -1,5 +1,6 @@
 const formularioNombre = document.getElementById('formularioNombre');
 const formularioEpisodio = document.getElementById('formularioEpisodio');
+const formularioLocalizacion = document.getElementById('formularioLocalizacion');
 const main = document.querySelector('main');
 
 const buscarPersonaje = async (nombre) => {
@@ -36,6 +37,7 @@ const buscarEpisodio = async (episodio) => {
   try {
     const respuesta = await fetch(url);
     const data = await respuesta.json();
+    console.log(data);
     main.innerHTML = '';
 
     if (data.results.length > 0) {
@@ -58,6 +60,33 @@ const buscarEpisodio = async (episodio) => {
   }
 };
 
+const buscarLocalizacion = async (localizacion) => {
+  const url = `https://rickandmortyapi.com/api/location?name=${localizacion}`;
+  try {
+    const respuesta = await fetch(url);
+    const data = await respuesta.json();
+    main.innerHTML = '';
+
+    if (data.results.length > 0) {
+      data.results.forEach(location => {
+        const article = document.createElement('article');
+        article.innerHTML = `
+          <h2>${location.name}</h2>
+          <p>Tipo: ${location.type}</p>
+          <p>Dimensión: ${location.dimension}</p>
+        `;
+        main.appendChild(article);
+      });
+    } else {
+      const mensaje = document.createTextNode('No se encontraron localizaciones con ese nombre.');
+      main.appendChild(mensaje);
+    }
+  } catch (error) {
+    console.error('Error en la consulta:', error);
+    main.innerHTML = '<p>Error al cargar las localizaciones.</p>';
+  }
+};
+
 formularioNombre.addEventListener('submit', (e) => {
   e.preventDefault();
   const nombre = document.getElementById('nombre').value;
@@ -68,4 +97,10 @@ formularioEpisodio.addEventListener('submit', (e) => {
   e.preventDefault();
   const episodio = document.getElementById('episodio').value;
   buscarEpisodio(episodio);
+});
+
+formularioLocalizacion.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const localizacion = document.getElementById('localizacion').value;
+  buscarLocalizacion(localizacion);
 });
