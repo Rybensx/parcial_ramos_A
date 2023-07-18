@@ -37,16 +37,17 @@ const buscarEpisodio = async (episodio) => {
   try {
     const respuesta = await fetch(url);
     const data = await respuesta.json();
-    console.log(data);
     main.innerHTML = '';
 
     if (data.results.length > 0) {
       data.results.forEach(episode => {
         const article = document.createElement('article');
         article.innerHTML = `
-          <h2>${episode.name}</h2>
-          <p>Fecha de emisión: ${episode.air_date}</p>
-          <p>Episodio: ${episode.episode}</p>
+          <div class="card">
+            <h2>${episode.name}</h2>
+            <p>Fecha de emisión: ${episode.air_date}</p>
+            <p>Episodio: ${episode.episode}</p>
+          </div>
         `;
         main.appendChild(article);
       });
@@ -71,9 +72,11 @@ const buscarLocalizacion = async (localizacion) => {
       data.results.forEach(location => {
         const article = document.createElement('article');
         article.innerHTML = `
-          <h2>${location.name}</h2>
-          <p>Tipo: ${location.type}</p>
-          <p>Dimensión: ${location.dimension}</p>
+          <div class="card">
+            <h2>${location.name}</h2>
+            <p>Tipo: ${location.type}</p>
+            <p>Dimensión: ${location.dimension}</p>
+          </div>
         `;
         main.appendChild(article);
       });
