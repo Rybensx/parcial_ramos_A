@@ -72,7 +72,7 @@ const buscarLocalizacion = async (localizacion) => {
       data.results.forEach(location => {
         const article = document.createElement('article');
         article.innerHTML = `
-          <div class="card">
+          <div class="card2">
             <h2>${location.name}</h2>
             <p>Tipo: ${location.type}</p>
             <p>Dimensión: ${location.dimension}</p>
